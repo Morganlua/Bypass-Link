@@ -1,0 +1,11 @@
+{
+  "name": "bypass-link-morgan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "BypassLink - Multi Shortlink Bypasser Web Application",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "node-fetch": "^2.6.7"
+  }
+}

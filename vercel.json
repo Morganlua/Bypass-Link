@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/api/bypass", "destination": "/api/bypass.js" },
+    { "source": "/(.*)", "destination": "/public/index.html" }
+  ]
+}
