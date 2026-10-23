@@ -1,187 +1,238 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reaction WA - Channel Auto React Panel</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-[#121212] text-zinc-200 min-h-screen font-sans pb-12">
-
-  <header class="bg-[#1e1e1e] border-b border-zinc-800 py-4 px-6 shadow-md">
-    <div class="max-w-xl mx-auto flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="bg-emerald-500/20 text-emerald-400 p-2.5 rounded-xl border border-emerald-500/30 flex items-center justify-center w-10 h-10 shadow-sm">
-          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
-          </svg>
-        </div>
-        <div>
-          <h1 class="text-base font-bold text-zinc-100 leading-none">Reaction WA</h1>
-          <span class="text-[10px] text-zinc-400 font-mono">Channel Reaction Engine v1.0</span>
-        </div>
-      </div>
-      <div class="bg-zinc-800 text-zinc-300 text-xs px-3 py-1.5 rounded-lg border border-zinc-700 font-semibold flex items-center gap-1.5">
-        <svg class="w-3.5 h-3.5 text-emerald-400 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-        </svg>
-        <span>Limit: Unlimited</span>
-      </div>
-    </div>
-  </header>
-
-  <main class="max-w-xl mx-auto px-4 mt-6 space-y-5">
-    
-    <div class="bg-[#1a1a1a] rounded-2xl p-5 border border-zinc-800 shadow-xl space-y-4">
-      
-      <div class="space-y-1.5">
-        <label class="text-xs font-bold text-zinc-300 flex items-center gap-2">
-          <svg class="w-4 h-4 text-emerald-400 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
-          </svg>
-          <span>URL Postingan Saluran</span>
-        </label>
-        <input type="url" id="channelUrl" placeholder="Contoh: https://whatsapp.com/channel/0029Va.../123" class="w-full bg-[#121212] border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 font-mono focus:outline-none focus:border-emerald-500 transition">
-        <p class="text-[10px] text-zinc-500">Kirim reaksi massal ke saluran WhatsApp manapun secara instan.</p>
-      </div>
-
-      <div class="space-y-1.5">
-        <label class="text-xs font-bold text-zinc-300 flex items-center gap-2">
-          <svg class="w-4 h-4 text-amber-400 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          <span>Reaction Emojis</span>
-        </label>
-        <input type="text" id="emojiInput" value="🥳, 🐱, 👍" placeholder="Contoh: 🥳, 🐱, 👍" class="w-full bg-[#121212] border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 font-mono focus:outline-none focus:border-amber-500 transition">
-        <p class="text-[10px] text-zinc-500">Pisahkan dengan koma jika lebih dari satu emoji.</p>
-      </div>
-
-      <button id="btnSubmit" onclick="sendReaction()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-lg shadow-emerald-600/20 text-xs">
-        <svg class="w-4 h-4 stroke-current" fill="none" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-        </svg>
-        <span>Kirim Reaction</span>
-      </button>
-
-      <div id="statusBox" class="bg-[#121212] rounded-xl p-4 border border-zinc-800 space-y-3">
-        <div class="flex justify-between items-center text-xs">
-          <span class="text-zinc-400 font-bold">STATUS SERVER:</span>
-          <span id="statusIndicator" class="text-zinc-500 font-bold">Standby</span>
-        </div>
-
-        <div class="space-y-1">
-          <div class="flex justify-between text-[11px] font-mono text-zinc-400">
-            <span>Progress Reaksi:</span>
-            <span><strong id="reactedCount" class="text-emerald-400">0</strong> / 700</span>
-          </div>
-          <div class="w-full bg-zinc-800 h-2 rounded-full overflow-hidden">
-            <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-300"></div>
-          </div>
-        </div>
-
-        <div id="logConsole" class="bg-[#0a0a0a] border border-zinc-800/80 rounded-lg p-3 h-28 overflow-y-auto font-mono text-[11px] text-zinc-300 space-y-1">
-          <div class="text-zinc-500">[System] Masukkan URL Postingan Saluran WhatsApp untuk mulai.</div>
-        </div>
-      </div>
-
-    </div>
-
-  </main>
-
-  <script>
-    let isProcessing = false;
-    let currentProgress = 0;
-    const TARGET_LIMIT = 700;
-    let progressTimer = null;
-
-    function logMessage(text, color = 'text-zinc-300') {
-      const consoleBox = document.getElementById('logConsole');
-      const time = new Date().toLocaleTimeString();
-      consoleBox.innerHTML += `<div class="${color}">[${time}] ${text}</div>`;
-      consoleBox.scrollTop = consoleBox.scrollHeight;
-    }
-
-    async function sendReaction() {
-      const channelUrl = document.getElementById('channelUrl').value.trim();
-      const emojiInput = document.getElementById('emojiInput').value.trim();
-
-      if (!channelUrl) {
-        alert('Mohon masukkan URL Postingan Saluran WhatsApp!');
-        return;
-      }
-
-      if (isProcessing) return;
-
-      isProcessing = true;
-      currentProgress = 0;
-      updateUI(true);
-
-      logMessage(`Mengirim request reaksi ke Server...`, 'text-amber-400');
-
-      try {
-        const response = await fetch('/api/react', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            channelUrl: channelUrl,
-            emojis: emojiInput,
-            count: TARGET_LIMIT
-          })
-        });
-
-        const result = await response.json();
-
-        if (result.status) {
-          logMessage(result.message, 'text-emerald-400 font-bold');
-          
-          progressTimer = setInterval(() => {
-            if (currentProgress >= TARGET_LIMIT) {
-              clearInterval(progressTimer);
-              logMessage(`Sukses mengirim ${TARGET_LIMIT} reaksi ke Saluran WhatsApp!`, 'text-emerald-400 font-bold');
-              isProcessing = false;
-              updateUI(false);
-              return;
-            }
-
-            currentProgress += Math.floor(Math.random() * 25) + 10;
-            if (currentProgress > TARGET_LIMIT) currentProgress = TARGET_LIMIT;
-
-            document.getElementById('reactedCount').innerText = currentProgress;
-            const percent = Math.floor((currentProgress / TARGET_LIMIT) * 100);
-            document.getElementById('progressBar').style.width = `${percent}%`;
-
-            logMessage(`Server memproses reaksi ${emojiInput} (${currentProgress}/${TARGET_LIMIT})...`);
-          }, 800);
-
-        } else {
-          logMessage(`Error: ${result.message}`, 'text-rose-400');
-          isProcessing = false;
-          updateUI(false);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AMP REM - Auto Reaction Wa</title>
+    <style>
+        :root {
+            --bg-dark: #0f1115;
+            --bg-card: #181b20;
+            --bg-input: #21252d;
+            --border-color: #2a2e37;
+            --text-main: #e6e8ec;
+            --text-muted: #8b92a0;
+            --accent-glow: #3b82f6;
+            --accent-btn: #2563eb;
+            --accent-btn-hover: #1d4ed8;
+            --success: #10b981;
+            --error: #ef4444;
         }
 
-      } catch (err) {
-        logMessage(`Gagal menghubungkan ke Server Backend.`, 'text-rose-400');
-        isProcessing = false;
-        updateUI(false);
-      }
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
 
-    function updateUI(processing) {
-      const btn = document.getElementById('btnSubmit');
-      const indicator = document.getElementById('statusIndicator');
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-      if (processing) {
-        btn.disabled = true;
-        btn.className = 'w-full bg-emerald-900/50 text-zinc-500 font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 cursor-not-allowed text-xs';
-        indicator.innerText = 'MEMPROSES (RUNNING)';
-        indicator.className = 'text-emerald-400 font-bold animate-pulse';
-      } else {
-        btn.disabled = false;
-        btn.className = 'w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-lg shadow-emerald-600/20 text-xs';
-        indicator.innerText = 'Standby';
-        indicator.className = 'text-zinc-500 font-bold';
-      }
-    }
-  </script>
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .header h1 span {
+            color: var(--accent-glow);
+        }
+
+        .header p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-glow);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-btn);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--accent-btn-hover);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result-box {
+            margin-top: 20px;
+            padding: 14px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            display: none;
+            word-break: break-all;
+        }
+
+        .result-box.success {
+            border-color: var(--success);
+            color: #34d399;
+        }
+
+        .result-box.error {
+            border-color: var(--error);
+            color: #f87171;
+        }
+
+        .footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+
+        .footer strong {
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>AMP REM <span>AUTO REACTION WA</span></h1>
+            <p>Kirim reaksi emoji otomatis ke Saluran WhatsApp</p>
+        </div>
+
+        <form id="reactionForm">
+            <div class="form-group">
+                <label for="postUrl">URL Postingan Saluran WA</label>
+                <input type="url" id="postUrl" class="form-control" placeholder="https://whatsapp.com/channel/0029Vb82nkLEwEjtLSQ49I44/563" required>
+            </div>
+
+            <div class="form-group">
+                <label for="emojis">Emoji Reaksi (Pisahkan dengan koma)</label>
+                <input type="text" id="emojis" class="form-control" placeholder="🎉, 😉, 👍" value="🎉, 😉" required>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-submit">Kirim Reaksi</button>
+        </form>
+
+        <div id="resultBox" class="result-box"></div>
+
+        <div class="footer">
+            Credits by <strong>Morgan</strong>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('reactionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const postUrl = document.getElementById('postUrl').value.trim();
+            const emojisInput = document.getElementById('emojis').value.trim();
+            const submitBtn = document.getElementById('submitBtn');
+            const resultBox = document.getElementById('resultBox');
+
+            if (!postUrl || !emojisInput) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Memproses...';
+            resultBox.style.display = 'none';
+            resultBox.className = 'result-box';
+
+            try {
+                const response = await fetch('/api/send-reaction', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        postUrl: postUrl,
+                        emojis: emojisInput
+                    })
+                });
+
+                const data = await response.json();
+
+                resultBox.style.display = 'block';
+                if (data.success) {
+                    resultBox.classList.add('success');
+                    resultBox.innerHTML = `<strong>Berhasil!</strong><br>${data.message}<br><small>Post ID: ${data.postId} | Emoji: ${data.emojisSent.join(' ')}</small>`;
+                } else {
+                    resultBox.classList.add('error');
+                    resultBox.innerHTML = `<strong>Gagal:</strong> ${data.error || 'Terjadi kesalahan'}`;
+                }
+
+            } catch (err) {
+                resultBox.style.display = 'block';
+                resultBox.classList.add('error');
+                resultBox.innerHTML = `<strong>Error:</strong> ${err.message || 'Gagal terhubung ke server API Vercel.'}`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Kirim Reaksi';
+            }
+        });
+    </script>
 </body>
 </html>
