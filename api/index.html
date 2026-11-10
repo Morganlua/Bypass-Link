@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cek Keyloger Pada File</title>
+  <style>
+    :root {
+      --bg-color: #0e0e11;
+      --card-bg: #16161a;
+      --border-color: #242429;
+      --text-main: #fffffe;
+      --text-muted: #94a1b2;
+      --accent-red: #ff5470;
+      --accent-green: #2cb67d;
+      --accent-gray: #2e2f3e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+    .container { width: 100%; max-width: 650px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+    h1 { font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 24px; color: var(--text-main); letter-spacing: 0.5px; }
+
+    .drop-zone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 40px 20px; text-align: center; background-color: #121215; cursor: pointer; transition: all 0.3s ease; }
+    .drop-zone:hover, .drop-zone.dragover { border-color: var(--text-muted); background-color: #1a1a20; }
+    .drop-zone p { color: var(--text-muted); font-size: 1rem; font-weight: 500; }
+    .drop-zone input[type="file"] { display: none; }
+
+    .file-logs { margin-top: 24px; background-color: #101014; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; }
+    .file-logs h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .log-item { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-main); }
+    .log-item span:first-child { color: var(--text-muted); }
+
+    .btn-check { width: 100%; margin-top: 20px; padding: 14px; background-color: var(--accent-gray); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
+    .btn-check:hover:not(:disabled) { background-color: #3b3c4f; }
+    .btn-check:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .system-logs { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+    .system-logs-title { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px; }
+    .pattern-list { list-style: none; margin-top: 10px; }
+    .pattern-item { background-color: #1f1418; border: 1px solid #4a1d24; color: var(--accent-red); padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 8px; word-break: break-all; }
+    .pattern-item a { color: #ff8599; text-decoration: underline; font-weight: bold; }
+    .pattern-item code { background: #2a1b20; padding: 2px 6px; border-radius: 4px; color: #ffb3c1; }
+    .status-text { font-size: 0.9rem; color: var(--accent-green); font-style: italic; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Cek Keyloger Pada File</h1>
+
+    <div class="drop-zone" id="dropZone">
+      <p id="dropText">Drag Your File</p>
+      <input type="file" id="fileInput">
+    </div>
+
+    <div class="file-logs">
+      <h3>Logs Your File</h3>
+      <div class="log-item"><span>Nama File:</span><span id="fileName">"-"</span></div>
+      <div class="log-item"><span>Ukuran File:</span><span id="fileSize">"-"</span></div>
+      <div class="log-item"><span>Tanggal:</span><span id="fileDate">"-"</span></div>
+    </div>
+
+    <button class="btn-check" id="btnCheck" disabled>Cek Files</button>
+
+    <div class="system-logs">
+      <div class="system-logs-title">Logs System •••</div>
+      <div id="statusArea" class="status-text">Siap menganalisis file.</div>
+      
+      <div id="resultContainer" style="display: none; margin-top: 14px;">
+        <div style="font-size: 0.9rem; margin-bottom: 8px; color: var(--text-main);">Pola Keylogger Terdeteksi:</div>
+        <ol class="pattern-list" id="patternList"></ol>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const fileDate = document.getElementById('fileDate');
+    const btnCheck = document.getElementById('btnCheck');
+    const statusArea = document.getElementById('statusArea');
+    const resultContainer = document.getElementById('resultContainer');
+    const patternList = document.getElementById('patternList');
+
+    let selectedFile = null;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) handleFileSelect(e.dataTransfer.files[0]);
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
+    });
+
+    function handleFileSelect(file) {
+      selectedFile = file;
+      fileName.textContent = `"${file.name}"`;
+      fileSize.textContent = `"${(file.size / 1024).toFixed(2)} KB"`;
+      const now = new Date();
+      fileDate.textContent = `"${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}"`;
+
+      btnCheck.disabled = false;
+      statusArea.textContent = "File siap dianalisis via Server API.";
+      resultContainer.style.display = "none";
+      patternList.innerHTML = "";
+    }
+
+    btnCheck.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      statusArea.textContent = "Sedang Analisis...";
+      btnCheck.disabled = true;
+      resultContainer.style.display = "none";
+      patternList.innerHTML = "";
+
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      try {
+        const response = await fetch('/api/analyze', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) throw new Error("Gagal memproses file di server.");
+
+        const data = await response.json();
+        
+        statusArea.textContent = "Analisis Selesai.";
+        btnCheck.disabled = false;
+        resultContainer.style.display = "block";
+
+        if (data.patterns && data.patterns.length > 0) {
+          data.patterns.forEach((item) => {
+            const li = document.createElement('li');
+            li.className = 'pattern-item';
+            if(item.type === 'safe') {
+              li.style.borderColor = '#1b4332';
+              li.style.backgroundColor = '#081c15';
+              li.style.color = '#2cb67d';
+            }
+            li.innerHTML = item.message;
+            patternList.appendChild(li);
+          });
+        }
+      } catch (err) {
+        statusArea.textContent = "Error: " + err.message;
+        btnCheck.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
