@@ -108,7 +108,7 @@
       fileDate.textContent = `"${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}"`;
 
       btnCheck.disabled = false;
-      statusArea.textContent = "File siap dianalisis via Server API.";
+      statusArea.textContent = "File siap dianalisis via Vercel Serverless Function.";
       resultContainer.style.display = "none";
       patternList.innerHTML = "";
     }
@@ -121,16 +121,16 @@
       resultContainer.style.display = "none";
       patternList.innerHTML = "";
 
-      const formData = new FormData();
-      formData.append("file", selectedFile);
-
       try {
-        const response = await fetch('/api/analyze', {
+        const response = await fetch('/api/index', {
           method: 'POST',
-          body: formData
+          headers: {
+            'Content-Type': 'application/octet-stream'
+          },
+          body: selectedFile
         });
 
-        if (!response.ok) throw new Error("Gagal memproses file di server.");
+        if (!response.ok) throw new Error("Gagal memproses file di server Vercel.");
 
         const data = await response.json();
         
