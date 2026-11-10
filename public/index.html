@@ -142,17 +142,14 @@
           data.patterns.forEach((item) => {
             const li = document.createElement('li');
             li.className = 'pattern-item';
+            if(item.type === 'safe') {
+              li.style.borderColor = '#1b4332';
+              li.style.backgroundColor = '#081c15';
+              li.style.color = '#2cb67d';
+            }
             li.innerHTML = item.message;
             patternList.appendChild(li);
           });
-        } else {
-          const li = document.createElement('li');
-          li.className = 'pattern-item';
-          li.style.borderColor = '#1b4332';
-          li.style.backgroundColor = '#081c15';
-          li.style.color = '#2cb67d';
-          li.textContent = "Tidak ditemukan pola keylogger/webhook standar dalam biner.";
-          patternList.appendChild(li);
         }
       } catch (err) {
         statusArea.textContent = "Error: " + err.message;
