@@ -1,9 +1,6 @@
 {
-  "version": 2,
   "rewrites": [
-    {
-      "source": "/api/send-reaction",
-      "destination": "/api/send-reaction.js"
-    }
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
+    { "source": "/(.*)", "destination": "/public/$1" }
   ]
 }
