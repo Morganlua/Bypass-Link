@@ -1,8 +1,12 @@
 {
-  "name": "cek-keylogger-web",
+  "name": "noxis-tmp-mail",
   "version": "1.0.0",
-  "private": true,
+  "description": "Noxis Tmp Mail - Multi-Provider Temp Mail & Inbox Reader",
+  "type": "module",
   "scripts": {
-    "start": "serve public"
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cycletls": "^2.0.5"
   }
 }

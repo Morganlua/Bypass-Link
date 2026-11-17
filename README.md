@@ -1,12 +1,14 @@
-# Cek Keylogger Pada File Lua (Full-Stack Vercel App)
+# Noxis Tmp Mail
 
-Aplikasi web pendeteksi keylogger & webhook tersembunyi pada file `.lua` / `.luac` (LuaJIT / Terenkripsi).
+Created By Noxis Protection Free Email Trial.
 
-## CARA DEPLOY KE GITHUB & VERCEL:
+## Fitur Utama
+- **Multi-Provider Backend**: Mendukung `temp-mail.org` (via CycleTLS JA3), `mail.tm` (custom username & domain `.org`, `.com`, `.net`, `.ru`, dll.), serta `1secmail` (custom nama email & domain instan).
+- **Support Inbox SPA & HTML**: Membaca pesan masuk, kode OTP, verifikasi SPA, hingga render penuh HTML email secara aman (`sandbox` iframe) maupun plain text.
+- **Riwayat Tmp**: Tersimpan otomatis di `localStorage` browser. Klik **Cek Box** pada riwayat mana pun untuk langsung membuka inbox email tersebut kapan saja.
+- **UI Neo-Brutalism**: Desain kontras tinggi, border tebal, shadow solid, dan 100% ikon SVG tajam tanpa stiker.
 
-1. **Extract ZIP** file ini di PC/HP kamu.
-2. Buat repository baru di **GitHub** (misal: `cek-keylogger-web`).
-3. Upload seluruh isi file & folder (`api/`, `public/`, `vercel.json`, `requirements.txt`, dll) ke repository GitHub tersebut.
-4. Buka **[Vercel Dashboard](https://vercel.com/)** dan Login.
-5. Klik **Add New Project** -> Impor Repository GitHub `cek-keylogger-web`.
-6. Klik **Deploy**. Vercel akan otomatis mendeteksi backend Python FastAPI dan Frontend HTML.
+## Cara Deploy ke Vercel
+1. Upload isi folder ini ke repository **GitHub** baru.
+2. Buka dashboard **Vercel** (`vercel.com`), klik **Add New Project**, lalu import repository GitHub tersebut.
+3. Biarkan pengaturan default dan klik **Deploy**.
