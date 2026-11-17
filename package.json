@@ -1,7 +1,7 @@
 {
   "name": "noxis-tmp-mail",
   "version": "3.0.0",
-  "description": "Noxis Tmp Mail - Permanent Local Inbox State & Individual Message Deletion",
+  "description": "Noxis Tmp Mail - Permanent Local Inbox State & Individual Message Deletion with Stable Layout",
   "type": "module",
   "scripts": {
     "start": "node server.js"
