@@ -1,161 +1,1295 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cek Keyloger Pada File</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Noxis Tmp Mail — Neo-Brutalism Disposable Inbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #0e0e11;
-      --card-bg: #16161a;
-      --border-color: #242429;
-      --text-main: #fffffe;
-      --text-muted: #94a1b2;
-      --accent-red: #ff5470;
-      --accent-green: #2cb67d;
-      --accent-gray: #2e2f3e;
+      --bg: #f4f3ee;
+      --surface: #ffffff;
+      --surface-alt: #e8e6df;
+      --ink: #0f0f0f;
+      --accent: #ffde00;
+      --accent-2: #00f59b;
+      --accent-3: #ff5c5c;
+      --accent-blue: #38bdf8;
+      --border: 3px solid #0f0f0f;
+      --shadow: 6px 6px 0px #0f0f0f;
+      --shadow-sm: 3px 3px 0px #0f0f0f;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
-    .container { width: 100%; max-width: 650px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-    h1 { font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 24px; color: var(--text-main); letter-spacing: 0.5px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    .drop-zone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 40px 20px; text-align: center; background-color: #121215; cursor: pointer; transition: all 0.3s ease; }
-    .drop-zone:hover, .drop-zone.dragover { border-color: var(--text-muted); background-color: #1a1a20; }
-    .drop-zone p { color: var(--text-muted); font-size: 1rem; font-weight: 500; }
-    .drop-zone input[type="file"] { display: none; }
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(#0f0f0f 1px, transparent 1px);
+      background-size: 24px 24px;
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-    .file-logs { margin-top: 24px; background-color: #101014; border: 1px solid var(--border-color); border-radius: 6px; padding: 16px; }
-    .file-logs h3 { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
-    .log-item { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-main); }
-    .log-item span:first-child { color: var(--text-muted); }
+    /* TOP HEADER */
+    header {
+      background: var(--surface);
+      border-bottom: var(--border);
+      padding: 16px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
 
-    .btn-check { width: 100%; margin-top: 20px; padding: 14px; background-color: var(--accent-gray); color: var(--text-main); border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s ease; }
-    .btn-check:hover:not(:disabled) { background-color: #3b3c4f; }
-    .btn-check:disabled { opacity: 0.5; cursor: not-allowed; }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink);
+    }
 
-    .system-logs { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color); }
-    .system-logs-title { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 12px; }
-    .pattern-list { list-style: none; margin-top: 10px; }
-    .pattern-item { background-color: #1f1418; border: 1px solid #4a1d24; color: var(--accent-red); padding: 10px 14px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 8px; word-break: break-all; }
-    .pattern-item a { color: #ff8599; text-decoration: underline; font-weight: bold; }
-    .pattern-item code { background: #2a1b20; padding: 2px 6px; border-radius: 4px; color: #ffb3c1; }
-    .status-text { font-size: 0.9rem; color: var(--accent-green); font-style: italic; }
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      background: var(--accent);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+    }
+
+    .tab-btn {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    }
+
+    .tab-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px #0f0f0f;
+    }
+
+    .tab-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #0f0f0f;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+    }
+
+    .badge-count {
+      background: var(--ink);
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      padding: 2px 7px;
+      border-radius: 2px;
+    }
+
+    /* MAIN CONTAINER - WIDE */
+    main {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px 28px 40px;
+      flex: 1;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* GENERATOR CONTROL BOX */
+    .control-card {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      margin-bottom: 24px;
+    }
+
+    .control-grid {
+      display: grid;
+      grid-template-columns: 1.2fr auto 1.3fr auto;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .control-grid {
+        grid-template-columns: 1fr;
+      }
+      .at-divider {
+        display: none;
+      }
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .neo-input, .neo-select {
+      width: 100%;
+      height: 50px;
+      padding: 0 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: var(--bg);
+      border: var(--border);
+      color: var(--ink);
+      outline: none;
+    }
+
+    .neo-input:focus, .neo-select:focus {
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .at-divider {
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 1.4rem;
+    }
+
+    .btn-generate {
+      height: 50px;
+      align-self: flex-end;
+      background: var(--accent-2);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 0 26px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.1s ease;
+    }
+
+    .btn-generate:hover {
+      background: #00e08d;
+      transform: translate(-1px, -1px);
+      box-shadow: 5px 5px 0px #0f0f0f;
+    }
+
+    .btn-generate:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #0f0f0f;
+    }
+
+    /* ACTIVE EMAIL BAR */
+    .active-mail-bar {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 2px dashed #0f0f0f;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .email-display-wrap {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      min-width: 280px;
+      background: var(--accent);
+      border: var(--border);
+      padding: 10px 16px;
+      gap: 12px;
+    }
+
+    .email-address-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 1.05rem;
+      word-break: break-all;
+      flex: 1;
+    }
+
+    .bar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 16px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .btn-action:hover {
+      background: var(--accent-blue);
+    }
+
+    .btn-action:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #0f0f0f;
+    }
+
+    /* WIDE INBOX WORKSPACE (LEBAR KE ATAS, BAWAH, KIRI, KANAN) */
+    .inbox-workspace {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: 440px 1fr;
+    }
+
+    @media (max-width: 1024px) {
+      .inbox-workspace {
+        grid-template-columns: 1fr;
+        min-height: 560px;
+      }
+    }
+
+    .inbox-sidebar {
+      border-right: var(--border);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+    }
+
+    @media (max-width: 1024px) {
+      .inbox-sidebar {
+        border-right: none;
+        border-bottom: var(--border);
+        max-height: 340px;
+      }
+    }
+
+    .inbox-header {
+      padding: 16px 20px;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent-2);
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--accent-2);
+      border-radius: 50%;
+      animation: blink 1.4s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+
+    .message-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg-item {
+      border: var(--border);
+      padding: 14px 16px;
+      background: var(--bg);
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+
+    .msg-item:hover {
+      background: #fff;
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .msg-item.active {
+      background: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .msg-sender {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .msg-subject {
+      font-weight: 800;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .msg-preview {
+      font-size: 0.85rem;
+      color: #333;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* MESSAGE READER PANE */
+    .reader-pane {
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      min-height: 640px;
+    }
+
+    .reader-toolbar {
+      padding: 14px 22px;
+      border-bottom: var(--border);
+      background: var(--surface-alt);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .view-mode-btns {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      padding: 6px 12px;
+      border: 2px solid #0f0f0f;
+      background: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .reader-meta {
+      padding: 18px 24px;
+      border-bottom: 2px solid #0f0f0f;
+      background: #fafafa;
+    }
+
+    .reader-subject {
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .reader-details {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .otp-banner {
+      margin: 14px 24px 0;
+      padding: 12px 16px;
+      background: var(--accent-2);
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .reader-body {
+      flex: 1;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .html-frame {
+      width: 100%;
+      flex: 1;
+      min-height: 460px;
+      border: 2px solid #0f0f0f;
+      background: #ffffff;
+    }
+
+    .text-pre {
+      width: 100%;
+      flex: 1;
+      min-height: 460px;
+      padding: 18px;
+      border: 2px solid #0f0f0f;
+      background: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-y: auto;
+    }
+
+    .empty-state {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      gap: 14px;
+    }
+
+    /* RIWAYAT TMP TAB */
+    .history-card {
+      background: var(--surface);
+      border: var(--border);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+
+    .history-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: var(--border);
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .history-item {
+      border: var(--border);
+      background: var(--bg);
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .history-mail-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .history-email {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .history-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #444;
+    }
+
+    .history-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-cek-box {
+      background: var(--accent);
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 18px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-cek-box:hover {
+      background: var(--accent-2);
+    }
+
+    .btn-delete-hist {
+      background: var(--accent-3);
+      color: #fff;
+      border: var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: #fff;
+      border-top: var(--border);
+      padding: 18px 28px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    footer span {
+      color: var(--accent);
+    }
+
+    /* TOAST */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--ink);
+      color: var(--accent);
+      border: 3px solid var(--accent);
+      padding: 12px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      font-size: 0.9rem;
+      z-index: 999;
+      display: none;
+      box-shadow: 5px 5px 0px rgba(0,0,0,0.4);
+    }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Cek Keyloger Pada File</h1>
-
-    <div class="drop-zone" id="dropZone">
-      <p id="dropText">Drag Your File</p>
-      <input type="file" id="fileInput">
-    </div>
-
-    <div class="file-logs">
-      <h3>Logs Your File</h3>
-      <div class="log-item"><span>Nama File:</span><span id="fileName">"-"</span></div>
-      <div class="log-item"><span>Ukuran File:</span><span id="fileSize">"-"</span></div>
-      <div class="log-item"><span>Tanggal:</span><span id="fileDate">"-"</span></div>
-    </div>
-
-    <button class="btn-check" id="btnCheck" disabled>Cek Files</button>
-
-    <div class="system-logs">
-      <div class="system-logs-title">Logs System •••</div>
-      <div id="statusArea" class="status-text">Siap menganalisis file.</div>
-      
-      <div id="resultContainer" style="display: none; margin-top: 14px;">
-        <div style="font-size: 0.9rem; margin-bottom: 8px; color: var(--text-main);">Pola Keylogger Terdeteksi:</div>
-        <ol class="pattern-list" id="patternList"></ol>
+  <!-- HEADER KIRI ATAS: NOXIS TMP MAIL + TABS -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <!-- SVG Sharp Mail Shield Icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.6" stroke-linecap="square" stroke-linejoin="miter">
+          <rect x="2" y="4" width="20" height="16" />
+          <polyline points="2,6 12,13 22,6" />
+        </svg>
       </div>
+      <div class="brand-title">Noxis Tmp Mail</div>
     </div>
-  </div>
+
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tabBtnTmp" onclick="switchTab('tmp')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M4 4h16v16H4z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+        Tmp Mail
+      </button>
+      <button class="tab-btn" id="tabBtnHistory" onclick="switchTab('history')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="9"/>
+          <polyline points="12 7 12 12 15 15"/>
+        </svg>
+        Riwayat Tmp
+        <span class="badge-count" id="historyCount">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- TAB 1: TMP MAIL -->
+    <section class="tab-panel active" id="panelTmp">
+      <div class="control-card">
+        <div class="control-grid">
+          <div class="input-group">
+            <label class="input-label" for="inputUsername">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              Input Name (Kosongkan = Acak)
+            </label>
+            <input type="text" id="inputUsername" class="neo-input" placeholder="contoh: asuuuuu" autocomplete="off" />
+          </div>
+
+          <div class="at-divider">@</div>
+
+          <div class="input-group">
+            <label class="input-label" for="selectDomain">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+              Domain Select
+            </label>
+            <select id="selectDomain" class="neo-select">
+              <option value="somoj.com|mailtm">Loading domains...</option>
+            </select>
+          </div>
+
+          <button class="btn-generate" id="btnGenerate" onclick="generateNewMail()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            Generate
+          </button>
+        </div>
+
+        <!-- ACTIVE MAIL ADDRESS BAR -->
+        <div class="active-mail-bar">
+          <div class="email-display-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.6">
+              <rect x="3" y="5" width="18" height="14"/>
+              <polyline points="3 7 12 13 21 7"/>
+            </svg>
+            <span class="email-address-text" id="currentEmailDisplay">Belum ada email aktif — Klik Generate</span>
+          </div>
+
+          <div class="bar-actions">
+            <button class="btn-action" onclick="copyCurrentEmail()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="9" y="9" width="13" height="13"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              Copy Email
+            </button>
+            <button class="btn-action" onclick="refreshInbox(true)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="23 4 23 10 17 10"/>
+                <polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+              Refresh Inbox
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KOLOM INBOX LEBAR (SUPPORT SPA HTML & TEXT) -->
+      <div class="inbox-workspace">
+        <div class="inbox-sidebar">
+          <div class="inbox-header">
+            <span>INBOX MASUK (<span id="inboxCount">0</span>)</span>
+            <span class="live-indicator">
+              <span class="pulse-dot"></span> AUTO SYNC
+            </span>
+          </div>
+          <div class="message-list" id="messageList">
+            <div class="empty-state">
+              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.2">
+                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+                <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+              </svg>
+              <strong>Kotak Masuk Kosong</strong>
+              <p style="font-size:0.88rem; color:#444;">Buat email terlebih dahulu lalu tunggu pesan OTP atau verifikasi masuk secara otomatis.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reader-pane" id="readerPane">
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.2">
+              <rect x="2" y="3" width="20" height="18"/>
+              <line x1="8" y1="9" x2="16" y2="9"/>
+              <line x1="8" y1="13" x2="16" y2="13"/>
+              <line x1="8" y1="17" x2="12" y2="17"/>
+            </svg>
+            <strong>Area Pembaca Pesan SPA &amp; HTML</strong>
+            <p style="font-size:0.92rem; color:#444; max-width:440px;">
+              Pilih salah satu pesan di panel kiri untuk melihat isi email lengkap, tombol verifikasi HTML SPA, maupun kode OTP.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: RIWAYAT TMP -->
+    <section class="tab-panel" id="panelHistory">
+      <div class="history-card">
+        <div class="history-header">
+          <div>
+            <h2 style="font-size:1.3rem; font-weight:800; text-transform:uppercase;">Riwayat Email Sementara</h2>
+            <p style="font-size:0.88rem; color:#444; margin-top:4px;">Klik <strong>Cek Box</strong> pada alamat email untuk langsung membuka halaman inbox email tersebut.</p>
+          </div>
+          <button class="btn-action" onclick="clearAllHistory()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14H6L5 6"/>
+              <path d="M10 11v6"/>
+              <path d="M14 11v6"/>
+            </svg>
+            Hapus Semua Riwayat
+          </button>
+        </div>
+
+        <div class="history-list" id="historyList">
+          <!-- Item riwayat dirender lewat JS -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Created By Noxis Protection Free Email Trial</span>
+  </footer>
+
+  <div class="toast" id="toastBox"></div>
 
   <script>
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const fileName = document.getElementById('fileName');
-    const fileSize = document.getElementById('fileSize');
-    const fileDate = document.getElementById('fileDate');
-    const btnCheck = document.getElementById('btnCheck');
-    const statusArea = document.getElementById('statusArea');
-    const resultContainer = document.getElementById('resultContainer');
-    const patternList = document.getElementById('patternList');
+    const STORAGE_KEY = "noxis_tmp_mail_history_v1";
+    let currentSession = null; // { email, token, provider }
+    let currentMessages = [];
+    let selectedMessage = null;
+    let readerMode = "html"; // 'html' | 'text'
+    let pollTimer = null;
 
-    let selectedFile = null;
+    // Daftar domain bawaan lengkap (.ru, .org, .gmail.com alias, .com, .net, dll.) + fetch domain dinamis dari API
+    const DEFAULT_DOMAINS = [
+      { domain: "temp-mail.org", provider: "tempmail", label: "temp-mail.org (Base CycleTLS)" },
+      { domain: "1secmail.com", provider: "1secmail", label: ".com — 1secmail.com" },
+      { domain: "1secmail.org", provider: "1secmail", label: ".org — 1secmail.org" },
+      { domain: "1secmail.net", provider: "1secmail", label: ".net — 1secmail.net" },
+      { domain: "xojxe.com", provider: "1secmail", label: ".com — xojxe.com" },
+      { domain: "yoggm.com", provider: "1secmail", label: ".com — yoggm.com" },
+      { domain: "esiix.com", provider: "1secmail", label: ".com — esiix.com" },
+      { domain: "wwjmp.com", provider: "1secmail", label: ".com — wwjmp.com" },
+      { domain: "guerrillamail.org", provider: "guerrilla", label: ".org — guerrillamail.org" },
+      { domain: "guerrillamail.net", provider: "guerrilla", label: ".net — guerrillamail.net" },
+      { domain: "guerrillamail.com", provider: "guerrilla", label: ".com — guerrillamail.com" },
+      { domain: "sharklasers.com", provider: "guerrilla", label: ".com — sharklasers.com" },
+      { domain: "mail.ru.net", provider: "1secmail", label: ".ru / .net — mail.ru.net (Auto Route)" },
+      { domain: "gmail.com.mx", provider: "1secmail", label: ".gmail.com — gmail.com.mx (Alias Route)" }
+    ];
 
-    dropZone.addEventListener('click', () => fileInput.click());
-    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('dragover');
-      if (e.dataTransfer.files.length > 0) handleFileSelect(e.dataTransfer.files[0]);
-    });
-
-    fileInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
-    });
-
-    function handleFileSelect(file) {
-      selectedFile = file;
-      fileName.textContent = `"${file.name}"`;
-      fileSize.textContent = `"${(file.size / 1024).toFixed(2)} KB"`;
-      const now = new Date();
-      fileDate.textContent = `"${now.toLocaleDateString('id-ID')} ${now.toLocaleTimeString('id-ID')}"`;
-
-      btnCheck.disabled = false;
-      statusArea.textContent = "File siap dianalisis via Vercel Serverless Function.";
-      resultContainer.style.display = "none";
-      patternList.innerHTML = "";
+    function showToast(msg) {
+      const el = document.getElementById("toastBox");
+      el.textContent = msg;
+      el.style.display = "block";
+      clearTimeout(el._t);
+      el._t = setTimeout(() => { el.style.display = "none"; }, 2800);
     }
 
-    btnCheck.addEventListener('click', async () => {
-      if (!selectedFile) return;
+    function switchTab(tab) {
+      document.getElementById("tabBtnTmp").classList.toggle("active", tab === "tmp");
+      document.getElementById("tabBtnHistory").classList.toggle("active", tab === "history");
+      document.getElementById("panelTmp").classList.toggle("active", tab === "tmp");
+      document.getElementById("panelHistory").classList.toggle("active", tab === "history");
+      if (tab === "history") renderHistory();
+    }
 
-      statusArea.textContent = "Sedang Analisis...";
-      btnCheck.disabled = true;
-      resultContainer.style.display = "none";
-      patternList.innerHTML = "";
+    function getHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveHistory(list) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      document.getElementById("historyCount").textContent = list.length;
+    }
+
+    function addToHistory(session) {
+      const list = getHistory().filter((item) => item.email !== session.email);
+      list.unshift({
+        ...session,
+        createdAt: new Date().toLocaleString("id-ID")
+      });
+      saveHistory(list);
+    }
+
+    async function loadDomains() {
+      const select = document.getElementById("selectDomain");
+      let items = [...DEFAULT_DOMAINS];
 
       try {
-        const response = await fetch('/api/index', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/octet-stream'
-          },
-          body: selectedFile
-        });
-
-        if (!response.ok) throw new Error("Gagal memproses file di server Vercel.");
-
-        const data = await response.json();
-        
-        statusArea.textContent = "Analisis Selesai.";
-        btnCheck.disabled = false;
-        resultContainer.style.display = "block";
-
-        if (data.patterns && data.patterns.length > 0) {
-          data.patterns.forEach((item) => {
-            const li = document.createElement('li');
-            li.className = 'pattern-item';
-            if(item.type === 'safe') {
-              li.style.borderColor = '#1b4332';
-              li.style.backgroundColor = '#081c15';
-              li.style.color = '#2cb67d';
-            }
-            li.innerHTML = item.message;
-            patternList.appendChild(li);
+        const res = await fetch("/api/mail?action=domains");
+        const data = await res.json();
+        if (data.status && Array.isArray(data.domains)) {
+          const dynamic = data.domains.map((d) => ({
+            domain: d.domain,
+            provider: d.provider,
+            label: `.${d.domain.split(".").pop()} — ${d.domain} [${d.tag}]`
+          }));
+          // Gabungkan domain dinamis aktif di urutan teratas
+          const seen = new Set();
+          items = [...dynamic, ...items].filter((x) => {
+            if (seen.has(x.domain)) return false;
+            seen.add(x.domain);
+            return true;
           });
         }
-      } catch (err) {
-        statusArea.textContent = "Error: " + err.message;
-        btnCheck.disabled = false;
+      } catch (e) {
+        console.warn("Using fallback domain list:", e);
       }
-    });
+
+      select.innerHTML = items
+        .map((d) => `<option value="${d.domain}|${d.provider}">${d.label}</option>`)
+        .join("");
+    }
+
+    async function generateNewMail() {
+      const btn = document.getElementById("btnGenerate");
+      const username = document.getElementById("inputUsername").value.trim();
+      const [rawDomain, provider] = document.getElementById("selectDomain").value.split("|");
+
+      // Normalisasi domain khusus alias .ru / .gmail.com ke domain aktif agar tetap menerima inbox sungguhan
+      let domain = rawDomain;
+      if (rawDomain === "mail.ru.net" || rawDomain === "gmail.com.mx") {
+        domain = "1secmail.org";
+      }
+
+      btn.disabled = true;
+      btn.textContent = "GENERATING...";
+
+      try {
+        const res = await fetch("/api/mail?action=generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, domain, provider })
+        });
+        const data = await res.json();
+
+        if (data.status && data.email) {
+          currentSession = {
+            email: data.email,
+            token: data.token,
+            provider: data.provider
+          };
+          document.getElementById("currentEmailDisplay").textContent = data.email;
+          addToHistory(currentSession);
+          resetReader();
+          showToast(`Email aktif: ${data.email}`);
+          await refreshInbox(false);
+          startAutoPoll();
+        } else {
+          showToast(`Gagal: ${data.error || "Coba domain lain"}`);
+        }
+      } catch (err) {
+        showToast("Error koneksi ke server API");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Generate
+        `;
+      }
+    }
+
+    function startAutoPoll() {
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(() => {
+        if (currentSession) refreshInbox(false);
+      }, 6000);
+    }
+
+    async function refreshInbox(manual = false) {
+      if (!currentSession) {
+        if (manual) showToast("Generate atau pilih email di Riwayat dulu!");
+        return;
+      }
+
+      if (manual) showToast("Memeriksa kotak masuk...");
+
+      try {
+        const params = new URLSearchParams({
+          action: "inbox",
+          email: currentSession.email,
+          token: currentSession.token || "",
+          provider: currentSession.provider
+        });
+        const res = await fetch(`/api/mail?${params.toString()}`);
+        const data = await res.json();
+
+        if (data.status) {
+          currentMessages = data.messages || [];
+          document.getElementById("inboxCount").textContent = currentMessages.length;
+          renderMessageList();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderMessageList() {
+      const container = document.getElementById("messageList");
+      if (!currentMessages.length) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.2">
+              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+              <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+            </svg>
+            <strong>Belum Ada Pesan Masuk</strong>
+            <p style="font-size:0.86rem; color:#444;">Menunggu pesan baru untuk <b>${escapeHtml(currentSession.email)}</b>...</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = currentMessages.map((m) => {
+        const isActive = selectedMessage && selectedMessage.id === m.id;
+        return `
+          <div class="msg-item ${isActive ? "active" : ""}" onclick="openMessage('${escapeAttr(m.id)}')">
+            <div class="msg-sender">
+              <span>${escapeHtml(m.from)}</span>
+              <span>${formatShortTime(m.receivedAt)}</span>
+            </div>
+            <div class="msg-subject">${escapeHtml(m.subject)}</div>
+            <div class="msg-preview">${escapeHtml(m.preview || "Klik untuk membuka isi pesan SPA / HTML")}</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    async function openMessage(id) {
+      if (!currentSession) return;
+      const pane = document.getElementById("readerPane");
+      pane.innerHTML = `<div class="empty-state"><strong>Memuat konten pesan SPA / HTML...</strong></div>`;
+
+      try {
+        const params = new URLSearchParams({
+          action: "read",
+          email: currentSession.email,
+          token: currentSession.token || "",
+          provider: currentSession.provider,
+          id
+        });
+        const res = await fetch(`/api/mail?${params.toString()}`);
+        const data = await res.json();
+
+        if (data.status && data.message) {
+          selectedMessage = data.message;
+          renderMessageList();
+          renderReaderPane();
+        } else {
+          pane.innerHTML = `<div class="empty-state"><strong>Gagal memuat pesan.</strong></div>`;
+        }
+      } catch (e) {
+        pane.innerHTML = `<div class="empty-state"><strong>Terjadi kesalahan jaringan.</strong></div>`;
+      }
+    }
+
+    function setReaderMode(mode) {
+      readerMode = mode;
+      renderReaderPane();
+    }
+
+    function extractOtpOrLink(text, html) {
+      const combined = `${text || ""} ${html || ""}`;
+      const otpMatch = combined.match(/(\d{4,8})/);
+      const linkMatch = combined.match(/https?:\/\/[^\s"'<>]+(?:verify|confirm|auth|token|activate|login|code)[^\s"'<>]*/i);
+      return {
+        otp: otpMatch ? otpMatch[1] : null,
+        link: linkMatch ? linkMatch[0] : null
+      };
+    }
+
+    function renderReaderPane() {
+      const pane = document.getElementById("readerPane");
+      if (!selectedMessage) return;
+
+      const { otp, link } = extractOtpOrLink(selectedMessage.text, selectedMessage.html);
+
+      let quickBanner = "";
+      if (otp || link) {
+        quickBanner = `
+          <div class="otp-banner">
+            <div style="font-family:'JetBrains Mono', monospace; font-size:0.88rem; font-weight:800;">
+              ${otp ? `KODE TERDETEKSI: <span style="background:#0f0f0f;color:#ffde00;padding:2px 8px;">${escapeHtml(otp)}</span>` : "TAUTAN VERIFIKASI SPA TERDETEKSI"}
+            </div>
+            <div style="display:flex; gap:8px;">
+              ${otp ? `<button class="mode-btn" onclick="copyText('${escapeAttr(otp)}')">COPY OTP</button>` : ""}
+              ${link ? `<a href="${escapeAttr(link)}" target="_blank" rel="noopener noreferrer" class="mode-btn" style="text-decoration:none;background:#0f0f0f;color:#fff;">BUKA LINK</a>` : ""}
+            </div>
+          </div>
+        `;
+      }
+
+      pane.innerHTML = `
+        <div class="reader-toolbar">
+          <div class="view-mode-btns">
+            <button class="mode-btn ${readerMode === "html" ? "active" : ""}" onclick="setReaderMode('html')">HTML / SPA VIEW</button>
+            <button class="mode-btn ${readerMode === "text" ? "active" : ""}" onclick="setReaderMode('text')">PLAIN TEXT</button>
+          </div>
+          <button class="mode-btn" onclick="resetReader()">TUTUP PESAN</button>
+        </div>
+
+        <div class="reader-meta">
+          <div class="reader-subject">${escapeHtml(selectedMessage.subject)}</div>
+          <div class="reader-details">
+            <span><strong>DARI:</strong> ${escapeHtml(selectedMessage.from)}</span>
+            <span><strong>KE:</strong> ${escapeHtml(currentSession.email)}</span>
+          </div>
+        </div>
+
+        ${quickBanner}
+
+        <div class="reader-body">
+          ${
+            readerMode === "html"
+              ? `<iframe id="htmlSandbox" class="html-frame" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin"></iframe>`
+              : `<div class="text-pre">${escapeHtml(selectedMessage.text || stripHtml(selectedMessage.html))}</div>`
+          }
+        </div>
+      `;
+
+      if (readerMode === "html") {
+        const frame = document.getElementById("htmlSandbox");
+        const doc = frame.contentDocument || frame.contentWindow.document;
+        doc.open();
+        doc.write(`
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <base target="_blank">
+            <style>
+              body { font-family: sans-serif; padding: 16px; color: #111; line-height: 1.5; word-wrap: break-word; }
+              a { color: #0055ff; font-weight: bold; }
+              img { max-width: 100%; height: auto; }
+            </style>
+          </head>
+          <body>${selectedMessage.html || selectedMessage.text || ""}</body>
+          </html>
+        `);
+        doc.close();
+      }
+    }
+
+    function resetReader() {
+      selectedMessage = null;
+      document.getElementById("readerPane").innerHTML = `
+        <div class="empty-state">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" stroke-width="2.2">
+            <rect x="2" y="3" width="20" height="18"/>
+            <line x1="8" y1="9" x2="16" y2="9"/>
+            <line x1="8" y1="13" x2="16" y2="13"/>
+            <line x1="8" y1="17" x2="12" y2="17"/>
+          </svg>
+          <strong>Area Pembaca Pesan SPA &amp; HTML</strong>
+          <p style="font-size:0.92rem; color:#444; max-width:440px;">
+            Pilih salah satu pesan di panel kiri untuk melihat isi email lengkap, tombol verifikasi HTML SPA, maupun kode OTP.
+          </p>
+        </div>
+      `;
+    }
+
+    // RENDER RIWAYAT & TOMBOL CEK BOX
+    function renderHistory() {
+      const list = getHistory();
+      const container = document.getElementById("historyList");
+      document.getElementById("historyCount").textContent = list.length;
+
+      if (!list.length) {
+        container.innerHTML = `
+          <div class="empty-state" style="border: 2px dashed #0f0f0f; background: var(--bg);">
+            <strong>Belum Ada Riwayat Email</strong>
+            <p style="font-size:0.88rem; color:#444;">Setiap email yang kamu buat di tab Tmp Mail akan tersimpan otomatis di sini.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map((item, idx) => `
+        <div class="history-item">
+          <div class="history-mail-info">
+            <div class="history-email">${escapeHtml(item.email)}</div>
+            <div class="history-meta">Dibuat: ${escapeHtml(item.createdAt || "-")} | Engine: ${escapeHtml(item.provider.toUpperCase())}</div>
+          </div>
+          <div class="history-actions">
+            <button class="btn-cek-box" onclick="openFromHistory(${idx})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                <polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/>
+                <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+              </svg>
+              Cek Box
+            </button>
+            <button class="btn-delete-hist" title="Hapus" onclick="deleteHistoryItem(${idx})">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    async function openFromHistory(index) {
+      const list = getHistory();
+      const target = list[index];
+      if (!target) return;
+
+      currentSession = {
+        email: target.email,
+        token: target.token,
+        provider: target.provider
+      };
+
+      document.getElementById("currentEmailDisplay").textContent = target.email;
+      resetReader();
+      switchTab("tmp");
+      showToast(`Membuka inbox: ${target.email}`);
+      await refreshInbox(false);
+      startAutoPoll();
+    }
+
+    function deleteHistoryItem(index) {
+      const list = getHistory();
+      list.splice(index, 1);
+      saveHistory(list);
+      renderHistory();
+      showToast("Riwayat dihapus");
+    }
+
+    function clearAllHistory() {
+      saveHistory([]);
+      renderHistory();
+      showToast("Semua riwayat dibersihkan");
+    }
+
+    function copyCurrentEmail() {
+      if (!currentSession?.email) {
+        showToast("Belum ada email untuk disalin");
+        return;
+      }
+      copyText(currentSession.email);
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt).then(() => {
+        showToast(`Disalin: ${txt}`);
+      });
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function escapeAttr(str) {
+      return String(str || "").replace(/'/g, "&#39;").replace(/"/g, "&quot;");
+    }
+
+    function stripHtml(html) {
+      const tmp = document.createElement("div");
+      tmp.innerHTML = html || "";
+      return tmp.textContent || tmp.innerText || "";
+    }
+
+    function formatShortTime(val) {
+      if (!val) return "";
+      const d = new Date(val);
+      if (isNaN(d.getTime())) return String(val).slice(0, 16);
+      return d.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+    }
+
+    // Init
+    (function init() {
+      const hist = getHistory();
+      document.getElementById("historyCount").textContent = hist.length;
+      loadDomains();
+    })();
   </script>
 </body>
 </html>
