@@ -107,7 +107,7 @@
     }
     .btn-action:hover { background: var(--accent-blue); }
 
-    /* WIDE INBOX WORKSPACE - LOCKED STABLE LAYOUT */
+    /* WIDE INBOX WORKSPACE - LOCKED STABLE HEIGHT & LAYOUT */
     .inbox-workspace {
       background: var(--surface); border: var(--border); box-shadow: var(--shadow);
       display: grid; grid-template-columns: 460px 1fr; height: 680px;
@@ -115,7 +115,7 @@
     @media (max-width: 1024px) { .inbox-workspace { grid-template-columns: 1fr; height: auto; min-height: 700px; } }
 
     .inbox-sidebar { border-right: var(--border); display: flex; flex-direction: column; background: var(--surface); height: 100%; overflow: hidden; }
-    @media (max-width: 1024px) { .inbox-sidebar { border-right: none; border-bottom: var(--border); height: 360px; } }
+    @media (max-width: 1024px) { .inbox-sidebar { border-right: none; border-bottom: var(--border); height: 380px; } }
 
     .inbox-header {
       padding: 14px 18px; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: space-between;
@@ -155,7 +155,7 @@
     }
     .btn-delete-msg:hover { background: var(--accent-3); color: #fff; }
 
-    /* READER PANE */
+    /* READER PANE - STABLE FIXED HEIGHT */
     .reader-pane { display: flex; flex-direction: column; background: #fff; height: 100%; overflow: hidden; }
 
     .reader-toolbar {
@@ -178,10 +178,10 @@
     }
 
     .reader-body { flex: 1; padding: 16px 20px; display: flex; flex-direction: column; overflow: hidden; }
-    .html-frame { width: 100%; height: 100%; border: 2px solid #0f0f0f; background: #ffffff; }
+    .html-frame { width: 100%; height: 100%; border: 2px solid #0f0f0f; background: #ffffff; flex: 1; }
     .text-pre {
       width: 100%; height: 100%; padding: 16px; border: 2px solid #0f0f0f; background: var(--bg);
-      font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; white-space: pre-wrap; word-break: break-word; overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; white-space: pre-wrap; word-break: break-word; overflow-y: auto; flex: 1;
     }
 
     .empty-state {
@@ -305,7 +305,7 @@
         </div>
       </div>
 
-      <!-- INBOX WORKSPACE -->
+      <!-- INBOX WORKSPACE - LOCKED STABLE LAYOUT -->
       <div class="inbox-workspace">
         <div class="inbox-sidebar">
           <div class="inbox-header">
