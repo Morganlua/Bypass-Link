@@ -1,8 +1,11 @@
 {
   "name": "noxis-tmp-mail",
-  "version": "2.0.0",
-  "description": "Noxis Tmp Mail - Fast Multi-Provider & Base Scrape Temp Mail",
+  "version": "3.0.0",
+  "description": "Noxis Tmp Mail - Permanent Local Inbox State & Individual Message Deletion",
   "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "cycletls": "^2.0.5"
   }

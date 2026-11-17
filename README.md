@@ -1,8 +1,8 @@
-# Noxis Tmp Mail v2
+# Noxis Tmp Mail v3
 
 Created By Noxis Protection Free Email Trial.
 
-## Perbaikan Utama (v2)
-- **Fast Generate (< 1 Detik)**: Menghilangkan blocking binary Go `cycletls` di serverless Vercel menggunakan direct HTTPS fetch + header JA3-compatible browser headers (dengan fallback `cycletls` otomatis untuk environment VPS/Node lokal), sehingga `temp-mail.org` (`web2.temp-mail.org`) dan `mail.tm` langsung aktif tanpa timeout.
-- **Base Scrape `temp-mail.org` Asli**: Endpoint `/mailbox`, `/messages`, dan `/messages/:id` langsung terhubung ke `https://web2.temp-mail.org` dengan Bearer JWT token asli.
-- **Support Domain Outlook & Multi-Domain**: Menambahkan routing domain `.outlook.com` / `.outlook.co.id` / `.hotmail.com`, `.ru`, `.org`, `.gmail.com`, `.com`, `.net`, serta domain aktif real-time dari `mail.tm`, `mail.gw`, `dropmail`, dan `1secmail`.
+## Pembaruan v3 (Fix Anti Hilang & Hapus Pesan)
+1. **Anti Pesan Inbox Hilang (`localStorage` Cache Backup)**: Pesan yang sudah masuk tidak akan pernah hilang meskipun terjadi *refresh*, perubahan ukuran layar (*layout resize*), atau gangguan jaringan sementara, karena disimpan ke penyimpanan lokal riwayat pesan aktif.
+2. **Hapus Pesan Inbox Satu Persatu & Bersihkan Semua**: Ditambahkan tombol hapus (🗑️) pada setiap kotak pesan masuk (*message box*) serta tombol clear all messages.
+3. **Stabilitas Sesi & Timestamp Waktu Asli**: Waktu pesan masuk ditampilkan akurat sesuai timestamp server, dan tata letak UI dikunci agar tidak melompat (*resizing bug fixed*).
