@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/mail.js": {
+      "maxDuration": 15
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/public/index.html" }

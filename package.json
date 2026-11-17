@@ -1,11 +1,8 @@
 {
   "name": "noxis-tmp-mail",
-  "version": "1.0.0",
-  "description": "Noxis Tmp Mail - Multi-Provider Temp Mail & Inbox Reader",
+  "version": "2.0.0",
+  "description": "Noxis Tmp Mail - Fast Multi-Provider & Base Scrape Temp Mail",
   "type": "module",
-  "scripts": {
-    "start": "node server.js"
-  },
   "dependencies": {
     "cycletls": "^2.0.5"
   }
